@@ -27,71 +27,76 @@ namespace _1st_attemp
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private static readonly List<string> Tags = new List<string>
-        //{
-        //  "корни",
-        //  "днд",
-        //  "киберпанк",
-        //  "зов-ктулху",
-        //  "5-редакция",
-        //  "малкавиане",
-        //  "правила"
-        //};
-        private static readonly Dictionary<string, List<string>> tabletopDatas = new Dictionary<string, List<string>>
+        private static readonly List<TabletopData> tabletopDataList = new List<TabletopData>
         {
-            { "корни", new List<string> 
-                { 
-                    "корневой тег1", 
-                    "корневой тег2", 
-                    "корневой", 
-                    "к",
-                    "корневой то и от и э", 
-                } 
-            },
-            { "мышиная стража", new List<string>
-                {
-                    "мышиная-стража-тег1",
-                    "мышиная-стража-тег2",
-                }
-            },
-            { "днд", new List<string>
-                {
-                    "днд-тег1",
-                    "днд-тег2",
-                }
-            },
-            { "зов ктулху", new List<string>
-                {
-                    "быстрый-старт",
-                    "зов-ктулху",
-                    "рулбук",
-                    "книга-правил",
-                    "что-необходимо",
-                    "боевка",
-                    "ход-игры",
-                    "игровой-процесс",
-                    "геймплей",
-                    "боевая-система",
-                    "идол-тота",
-                    "приключение",
-                    "сценарий",
-                    "безымянный-туман",
-                    "леденящий-ужас",
-                    "лютня-ламфеля",
-                    "недетские-игры",
-                    "санаториум",
-                    "ужас-на-халдон-хилл",
-                    "шоу",
-                    "эликсир-жизни",
-                }
-            },
-            { "mouse guard", new List<string>
-                {
-                    "mouse-guard-тег1",
-                    "mouse-guard-тег2",
-                }
-            },
+            new TabletopData(new List<string>
+            {
+                "корни",
+                "roots"
+            }, new List<string>
+            {
+                "корневой тег1", 
+                "корневой тег2", 
+                "корневой", 
+                "к",
+                "корневой то и от и э", 
+            })
         };
+        //private static readonly Dictionary<string, List<string>> tabletopDatas = new Dictionary<string, List<string>>
+        //{
+        //    { "корни", new List<string> 
+        //        { 
+        //            "корневой тег1", 
+        //            "корневой тег2", 
+        //            "корневой", 
+        //            "к",
+        //            "корневой то и от и э", 
+        //        } 
+        //    },
+        //    { "мышиная стража", new List<string>
+        //        {
+        //            "мышиная-стража-тег1",
+        //            "мышиная-стража-тег2",
+        //        }
+        //    },
+        //    { "днд", new List<string>
+        //        {
+        //            "днд-тег1",
+        //            "днд-тег2",
+        //        }
+        //    },
+        //    { "зов ктулху", new List<string>
+        //        {
+        //            "быстрый-старт",
+        //            "зов-ктулху",
+        //            "рулбук",
+        //            "книга-правил",
+        //            "что-необходимо",
+        //            "боевка",
+        //            "ход-игры",
+        //            "игровой-процесс",
+        //            "геймплей",
+        //            "боевая-система",
+        //            "идол-тота",
+        //            "приключение",
+        //            "сценарий",
+        //            "безымянный-туман",
+        //            "леденящий-ужас",
+        //            "лютня-ламфеля",
+        //            "недетские-игры",
+        //            "санаториум",
+        //            "ужас-на-халдон-хилл",
+        //            "шоу",
+        //            "эликсир-жизни",
+        //        }
+        //    },
+        //    { "mouse guard", new List<string>
+        //        {
+        //            "mouse-guard-тег1",
+        //            "mouse-guard-тег2",
+        //        }
+        //    },
+        //};
 
         public MainWindow()
         {
@@ -114,6 +119,21 @@ namespace _1st_attemp
             listbox1.Visibility = completions.Any() ? Visibility.Visible : Visibility.Collapsed;
         }
 
+        private bool IsTabletopExists(string name)
+        {
+            return tabletopDataList.Any(data => data.Names.Contains(name));
+        }
+
+        private IEnumerable<string> GetAllTabletopNames()
+        {
+            return tabletopDataList.SelectMany(tabletopData => tabletopData.Names);
+        }
+
+        private List<string> GetTags(string name)
+        {
+            return tabletopDataList.Find(data => data.Names.Contains(name))?.Tags;
+        }
+        
         private List<string> GetCompletions(string input)
         {
             // Разбиваем сырой инпут на слова
@@ -124,16 +144,16 @@ namespace _1st_attemp
             // Пытаемся найти среди слов инпута название игры
             var index = 0;
             var gameName = split[0];
-            while (!tabletopDatas.ContainsKey(gameName) && index < split.Length-1)
+            while (!IsTabletopExists(gameName) && index < split.Length-1)
             {
                 index++;
                 gameName += $" {split[index]}";
             }
             
-            if (!tabletopDatas.ContainsKey(gameName))
+            if (!IsTabletopExists(gameName))
             {
                 // Название игры не дописано, значит пока работаем только с ключами
-                return tabletopDatas.Keys.Where(key => key.Trim().ToLower().StartsWith(input)).ToList();
+                return GetAllTabletopNames().Where(key => key.Trim().ToLower().StartsWith(input)).ToList();
             }
 
             // Получаем список слов без тех слов, которые являются частью названия игры
@@ -149,7 +169,7 @@ namespace _1st_attemp
             for (int i = tags.Count - 1; i >= 0; i--)
             {
                 cursor = $"{tags[i]} {cursor}".Trim();
-                completions.AddRange(tabletopDatas[gameName].Where(tag =>
+                completions.AddRange(GetTags(gameName).Where(tag =>
                 {
                     var temp = tag.Trim().ToLower();
                     return temp != cursor && temp.StartsWith(cursor);
@@ -181,29 +201,6 @@ namespace _1st_attemp
             input.AddRange(selected);
 
             textBox1.Text = string.Join(" ", input);
-
-            //int index = -1;
-            //int min = Math.Min(selected.Count, input.Count);
-            //for (int i = 0; i < min; i++)
-            //{
-            //    if (selected[i] != input[i]) break;
-            //    index++;
-            //}
-
-            //// Все слова после index не присутствуют в input
-            //var completionWords = new List<string>();
-            //for (int i = index + 1; i < selected.Count; i++)
-            //{
-            //    completionWords.Add(selected[i]);
-            //}
-
-            //Console.WriteLine(string.Join(", ", completionWords));
-
-            //// Удаляем недописанное слово и вставляем вместо него выбранное 
-            //var index = textBox1.Text.LastIndexOf(' ') + 1;
-            //textBox1.Text = textBox1.Text.Remove(index);
-
-            //textBox1.Text += selected;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
