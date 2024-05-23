@@ -184,9 +184,8 @@ namespace _1st_attemp
             if (listbox1.SelectedItem == null) return;
 
             var selected = listbox1.SelectedItem.ToString().Split(' ').ToList();
-            var input = textBox1.Text.ToLower().Split(' ').ToList();
-
-
+            var input = textBox1.Text.Trim().ToLower().Split(' ').ToList();
+            
             int index = input.Count;
             for (int i = input.Count - 1; i >= 0; i--)
             {
