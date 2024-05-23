@@ -14,9 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Data;
+using System.Globalization;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
-
+using System.Threading;
 
 
 namespace _1st_attemp
@@ -40,8 +41,11 @@ namespace _1st_attemp
         {
             { "корни", new List<string> 
                 { 
-                    "корневой-тег1", 
-                    "корневой-тег2", 
+                    "корневой тег1", 
+                    "корневой тег2", 
+                    "корневой", 
+                    "к",
+                    "корневой то и от и э", 
                 } 
             },
             { "мышиная стража", new List<string>
@@ -56,11 +60,10 @@ namespace _1st_attemp
                     "днд-тег2",
                 }
             },
-            { "зов-ктулху", new List<string>
+            { "зов ктулху", new List<string>
                 {
                     "быстрый-старт",
                     "зов-ктулху",
-                    "рулбук",
                     "рулбук",
                     "книга-правил",
                     "что-необходимо",
@@ -82,7 +85,7 @@ namespace _1st_attemp
                     "эликсир-жизни",
                 }
             },
-            { "mouse-guard", new List<string>
+            { "mouse guard", new List<string>
                 {
                     "mouse-guard-тег1",
                     "mouse-guard-тег2",
@@ -104,52 +107,103 @@ namespace _1st_attemp
         // Событие смены инпута
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Чистим список предложений
             listbox1.Items.Clear();
-            listbox1.Visibility = Visibility.Collapsed;
 
-            // Разбиваем сырой инпут на слова и работаем с последним из них
-            var words = textBox1.Text.Split(' ');
-            if (!words.Any()) return;
-
-            // Работаем с словом только если оно не пустое
-            var lastWord = words.Last().ToLower();
-            if (lastWord.Trim() == "") return;
-
-            var firstWord = words[0];
-            var isFirstWord = words.Count() == 1;
-
-            // Если последнее слово является первым, то значит нам нужны предложения названий настолок
-            var tags = tabletopDatas.Keys.ToList();
-            if (!isFirstWord)
-            {
-                // В противном случае - пытаемся получить теги для выбранной настолки
-                if (!tabletopDatas.TryGetValue(firstWord, out var tabletopTags)) return;
-                tags = tabletopTags;
-            }
-
-            // Добавляем в список предложений те теги, которые начинаются также как и последнее слово
-            foreach (var tag in tags.Where(tag => tag.ToLower().StartsWith(lastWord)))
-            {
-                listbox1.Items.Add(tag);
-            }
-            
-            // Если список был чем-то заполнен - показываем его
-            listbox1.Visibility = !listbox1.Items.IsEmpty ? Visibility.Visible : Visibility.Collapsed;
+            var completions = GetCompletions(textBox1.Text);
+            completions.ForEach(completion => listbox1.Items.Add(completion));
+            listbox1.Visibility = completions.Any() ? Visibility.Visible : Visibility.Collapsed;
         }
 
+        private List<string> GetCompletions(string input)
+        {
+            // Разбиваем сырой инпут на слова
+            input = input.Trim().ToLower();
+            var split = input.Split(' ');
+            if (!split.Any() || string.IsNullOrEmpty(split[0].Trim())) return new List<string>();
+            
+            // Пытаемся найти среди слов инпута название игры
+            var index = 0;
+            var gameName = split[0];
+            while (!tabletopDatas.ContainsKey(gameName) && index < split.Length-1)
+            {
+                index++;
+                gameName += $" {split[index]}";
+            }
+            
+            if (!tabletopDatas.ContainsKey(gameName))
+            {
+                // Название игры не дописано, значит пока работаем только с ключами
+                return tabletopDatas.Keys.Where(key => key.Trim().ToLower().StartsWith(input)).ToList();
+            }
+
+            // Получаем список слов без тех слов, которые являются частью названия игры
+            var tags = new List<string>();
+            for (int i = index + 1; i < split.Length; i++)
+            {
+                tags.Add(split[i]);
+            }
+
+            var completions = new List<string>();
+            var cursor = "";
+            
+            for (int i = tags.Count - 1; i >= 0; i--)
+            {
+                cursor = $"{tags[i]} {cursor}".Trim();
+                completions.AddRange(tabletopDatas[gameName].Where(tag =>
+                {
+                    var temp = tag.Trim().ToLower();
+                    return temp != cursor && temp.StartsWith(cursor);
+                }));
+            }
+            
+            return completions;
+        }
+        
         private void listbox1_selectionchanged(object sender, RoutedEventArgs e)
         {
             if (listbox1.SelectedItem == null) return;
 
-            // Кешируем выбранное завершение            
-            var selected = listbox1.SelectedItem.ToString();
+            var selected = listbox1.SelectedItem.ToString().Split(' ').ToList();
+            var input = textBox1.Text.ToLower().Split(' ').ToList();
 
-            // Удаляем недописанное слово и вставляем вместо него выбранное 
-            var index = textBox1.Text.LastIndexOf(' ') + 1;
-            textBox1.Text = textBox1.Text.Remove(index);
 
-            textBox1.Text += selected;
+            int index = input.Count;
+            for (int i = input.Count - 1; i >= 0; i--)
+            {
+                if (selected[0].StartsWith(input[i].ToLower()))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            while (input.Count > index) input.RemoveAt(input.Count-1);
+            input.AddRange(selected);
+
+            textBox1.Text = string.Join(" ", input);
+
+            //int index = -1;
+            //int min = Math.Min(selected.Count, input.Count);
+            //for (int i = 0; i < min; i++)
+            //{
+            //    if (selected[i] != input[i]) break;
+            //    index++;
+            //}
+
+            //// Все слова после index не присутствуют в input
+            //var completionWords = new List<string>();
+            //for (int i = index + 1; i < selected.Count; i++)
+            //{
+            //    completionWords.Add(selected[i]);
+            //}
+
+            //Console.WriteLine(string.Join(", ", completionWords));
+
+            //// Удаляем недописанное слово и вставляем вместо него выбранное 
+            //var index = textBox1.Text.LastIndexOf(' ') + 1;
+            //textBox1.Text = textBox1.Text.Remove(index);
+
+            //textBox1.Text += selected;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
