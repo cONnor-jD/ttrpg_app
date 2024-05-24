@@ -18,6 +18,7 @@ using System.Globalization;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Diagnostics;
 
 
 namespace _1st_attemp
@@ -40,6 +41,51 @@ namespace _1st_attemp
                 "корневой", 
                 "к",
                 "корневой то и от и э", 
+            }),            
+            new TabletopData(new List<string>
+            {
+                "зов ктулху",
+                "call of cthulhu"
+            }, new List<string>
+            {
+                "быстрый-старт",
+                "зов-ктулху",
+                "рулбук",
+                "книга-правил",
+                "что-необходимо",
+                "боевка",
+                "ход-игры",
+                "игровой-процесс",
+                "геймплей",
+                "боевая-система",
+                "идол-тота",
+                "приключение",
+                "сценарий",
+                "безымянный-туман",
+                "леденящий-ужас",
+                "лютня-ламфеля",
+                "недетские-игры",
+                "санаториум",
+                "ужас-на-халдон-хилл",
+                "шоу",
+                "эликсир-жизни",
+            }),            
+            new TabletopData(new List<string>
+            {
+                "барокко",
+                "hexxen",
+                "18 век"
+            }, new List<string>
+            {
+                "рулбук",
+                "мир",
+                "история",
+                "создание персонажа",
+                "классы",
+                "правила",
+                "боевая система",
+                "снаряжение",
+                "для мастера",
             })
         };
         //private static readonly Dictionary<string, List<string>> tabletopDatas = new Dictionary<string, List<string>>
@@ -202,44 +248,44 @@ namespace _1st_attemp
             textBox1.Text = string.Join(" ", input);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void GurpsBtn_Click(object sender, RoutedEventArgs e)
         {
-            webbrowser1.Navigate("https://drive.google.com/file/d/1-ecQ7Grm8vQF6HvtJ8soGDVu2WexdHgM/view?usp=sharing");
+            Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/1-ecQ7Grm8vQF6HvtJ8soGDVu2WexdHgM/view?usp=sharing") { UseShellExecute = true });
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void MouseguardBtn_Click(object sender, RoutedEventArgs e)
         {
-            webbrowser1.Navigate("https://drive.google.com/file/d/1S3sVUpCg3WJYyPkmIiRhPI9DoOTiBPjK/view?usp=sharing");
+            Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/1S3sVUpCg3WJYyPkmIiRhPI9DoOTiBPjK/view?usp=sharing") { UseShellExecute = true });
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void PathfinderBtn_Click(object sender, RoutedEventArgs e)
         {
-            webbrowser1.Navigate("https://drive.google.com/file/d/1hhV4PXj5kg9Okbqc_PnrYQ3AmgSurW6f/view?usp=sharing");
+            Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/1hhV4PXj5kg9Okbqc_PnrYQ3AmgSurW6f/view?usp=sharing") { UseShellExecute = true });
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void CyberpunkredBtn_Click(object sender, RoutedEventArgs e)
         {
-            webbrowser1.Navigate("https://drive.google.com/file/d/1aB766JFYx3KbY4hWTCU4wLbYoKocJMyd/view?usp=sharing");
+            Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/1aB766JFYx3KbY4hWTCU4wLbYoKocJMyd/view?usp=sharing") { UseShellExecute = true });
         }
 
-        private void Button_Click_4(object sender, RoutedEventArgs e)
+        private void CallofCthulhuBtn_Click(object sender, RoutedEventArgs e)
         {
-            webbrowser1.Navigate("https://www.youtube.com/watch?v=ghjFoqXMUkc");
+            Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/16wAV1KtcA4PKprBmeGhmIq_9fzaPRRIb/view?usp=sharing") { UseShellExecute = true });
         }
 
-        private void Button_Click_5(object sender, RoutedEventArgs e)
+        private void DndBtn_Click(object sender, RoutedEventArgs e)
         {
-            webbrowser1.Navigate("https://www.cyberforum.ru/windows-forms/thread1755362.html?ysclid=lvsit8l8qx666467821");
+            Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/1UULqSV5-67MP3sJbLI_PKI0eQmHxiopG/view?usp=sharing") { UseShellExecute = true });
         }
 
-        private void Button_Click_6(object sender, RoutedEventArgs e)
+        private void VtmBtn_Click(object sender, RoutedEventArgs e)
         {
-            webbrowser1.Navigate("https://drive.google.com/file/d/1F7btMkxCKoa6nbqdafyvidafHVq0pKbK/view?usp=sharing");
+            Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/1F7btMkxCKoa6nbqdafyvidafHVq0pKbK/view?usp=sharing") { UseShellExecute = true });
         }
 
-        private void Button_Click_7(object sender, RoutedEventArgs e)
+        private void ShadowrunBtn_Click(object sender, RoutedEventArgs e)
         {
-            webbrowser1.Navigate("https://drive.google.com/file/d/1PoCve_Gsx9RGegnyZCTA7Q1nof3jPEMg/view?usp=sharing");
+            Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/1PoCve_Gsx9RGegnyZCTA7Q1nof3jPEMg/view?usp=sharing") { UseShellExecute = true });
         }
     }
 }

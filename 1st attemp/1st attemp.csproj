@@ -126,8 +126,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="1st attemp_TemporaryKey.pfx" />
-    <None Include="docs\GURPS-rules.pdf" />
-    <None Include="docs\Run_and_Gun_rus_v1_0.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -138,7 +136,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\gurpsicon.jpg" />
+    <Resource Include="icons\gurps-icon.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icons\cyberpunk-red.jpg" />

@@ -17,32 +17,32 @@
             <ColumnDefinition Width="167*"/>
         </Grid.ColumnDefinitions>
         <TextBox Name="textBox1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="101,0,0,0" TextWrapping="Wrap" Text="" Width="477" Height="26" Grid.ColumnSpan="3" TextChanged="textBox1_TextChanged"/>
-        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10,31,288,0" Height="39" Click="Button_Click" Grid.RowSpan="2" Grid.Column="2">
-            <Image Source="icons/gurpsicon.jpg" Height="45" Width="35"></Image>
+        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10,31,288,0" Height="39" Click="GurpsBtn_Click" Grid.RowSpan="2" Grid.Column="2">
+            <Image Source="icons/gurps-icon.jpg" Height="45" Width="35"></Image>
         </Button>
-        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,31,33,0" Height="39" Grid.RowSpan="2" Grid.Column="1" Click="Button_Click_3">
+        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,31,33,0" Height="39" Grid.RowSpan="2" Grid.Column="1" Click="CyberpunkredBtn_Click">
             <Image Source="icons/cyberpunk-red.jpg" Height="45" Width="35"></Image>
         </Button>
-        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="65,31,231,0" Height="39" Grid.RowSpan="2" Grid.Column="2" Click="Button_Click_4">
+        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="65,31,231,0" Height="39" Grid.RowSpan="2" Grid.Column="2" Click="CallofCthulhuBtn_Click">
             <Image Source="icons/cthulhu-icon.png" Height="45" Width="35"></Image>
         </Button>
-        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="205,31,90,0" Height="39" Grid.Column="2" Grid.RowSpan="2" Click="Button_Click_6">
+        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="205,31,90,0" Height="39" Grid.Column="2" Grid.RowSpan="2" Click="VtmBtn_Click">
             <Image Source="icons/vtm.jpg" Height="45" Width="35"></Image>
         </Button>
-        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="249,31,50,0" Height="39" Grid.Column="2" Grid.RowSpan="2" Click="Button_Click_7">
+        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="249,31,50,0" Height="39" Grid.Column="2" Grid.RowSpan="2" Click="ShadowrunBtn_Click">
             <Image Source="icons/shadowrun-icon.jpg" Height="45" Width="35"></Image>
         </Button>
-        <Button Margin="174,31,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="39" Width="39" Grid.RowSpan="2" Click="Button_Click_2">
+        <Button Margin="174,31,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="39" Width="39" Grid.RowSpan="2" Click="PathfinderBtn_Click">
             <Image Source="icons/pathfinder-icon.jpg" Height="45" Width="35"></Image>
         </Button>
-        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="125,31,174,0" Height="39" Grid.Column="2" Grid.RowSpan="2" Click="Button_Click_5">
+        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="125,31,174,0" Height="39" Grid.Column="2" Grid.RowSpan="2" Click="DndBtn_Click">
             <Image Source="icons/dnd-icon.jpg" Height="45" Width="35"></Image>
         </Button>
-        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="151,31,88,0" Height="39" Grid.RowSpan="2" Click="Button_Click_1">
+        <Button HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="151,31,88,0" Height="39" Grid.RowSpan="2" Click="MouseguardBtn_Click">
             <Image Source="icons/mouseguard-icon.jpg" Height="45" Width="35"></Image>
         </Button>
         <ListBox SelectionChanged="listbox1_selectionchanged" Visibility="Hidden" Name="listbox1" d:ItemsSource="{d:SampleData ItemCount=7}" Grid.ColumnSpan="3" Margin="151,26,50,0" Grid.RowSpan="2"/>
-        <WebBrowser Name="webbrowser1" Margin="-80,77,-81,0" Grid.ColumnSpan="3" Height="1725" VerticalAlignment="Top" Grid.Row="1"/>
+        <WebBrowser Name="webbrowser1" Visibility="Hidden" Margin="-80,77,-81,0" Grid.ColumnSpan="3" Height="1725" VerticalAlignment="Top" Grid.Row="1"/>
 
 
     </Grid>
