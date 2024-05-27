@@ -40,7 +40,7 @@ namespace _1st_attemp
                 "корневой тег2", 
                 "корневой", 
                 "к",
-                "корневой то и от и э", 
+                "корневой то от э э", 
             }),            
             new TabletopData(new List<string>
             {
@@ -194,7 +194,7 @@ namespace _1st_attemp
             }, new List<string>
             {
                 "создание персонажа",
-                "пердыстория",
+                "предыстория",
                 "классы",
                 "раса",
                 "социальное взаимодействие",
@@ -268,7 +268,26 @@ namespace _1st_attemp
                 "греция",
                 "египет",
                 "рим",
-                "ледниковый период",
+                "ледниковый период", 
+            }, new List<PdfFile>
+            {
+                new PdfFile("https://drive.google.com/file/d/1-ecQ7Grm8vQF6HvtJ8soGDVu2WexdHgM/view", new List<string>
+                {
+                    "правила"
+                }), 
+                new PdfFile("https://drive.google.com/file/d/18ApF86Pvq4uiaiqKxVkx95h0beUOu4HV/view", new List<string>
+                {
+                    "создание персонажа"
+                }), 
+                new PdfFile("https://drive.google.com/file/d/1HX-kdPjZyZi8FZ0rb60hleKS9H-AVj92/view", new List<string>
+                {
+                    "кампания", "греция"
+                }), 
+                new PdfFile("https://drive.google.com/file/d/1h009nfLqIeQK58oeK3w5T3-KLYFhI1OP/view", new List<string>
+                {
+                    "кампания", "египет"
+                }), 
+                
             }),
             new TabletopData(new List<string>
             {
@@ -365,61 +384,6 @@ namespace _1st_attemp
             }),
 
         };
-        //private static readonly Dictionary<string, List<string>> tabletopDatas = new Dictionary<string, List<string>>
-        //{
-        //    { "корни", new List<string> 
-        //        { 
-        //            "корневой тег1", 
-        //            "корневой тег2", 
-        //            "корневой", 
-        //            "к",
-        //            "корневой то и от и э", 
-        //        } 
-        //    },
-        //    { "мышиная стража", new List<string>
-        //        {
-        //            "мышиная-стража-тег1",
-        //            "мышиная-стража-тег2",
-        //        }
-        //    },
-        //    { "днд", new List<string>
-        //        {
-        //            "днд-тег1",
-        //            "днд-тег2",
-        //        }
-        //    },
-        //    { "зов ктулху", new List<string>
-        //        {
-        //            "быстрый-старт",
-        //            "зов-ктулху",
-        //            "рулбук",
-        //            "книга-правил",
-        //            "что-необходимо",
-        //            "боевка",
-        //            "ход-игры",
-        //            "игровой-процесс",
-        //            "геймплей",
-        //            "боевая-система",
-        //            "идол-тота",
-        //            "приключение",
-        //            "сценарий",
-        //            "безымянный-туман",
-        //            "леденящий-ужас",
-        //            "лютня-ламфеля",
-        //            "недетские-игры",
-        //            "санаториум",
-        //            "ужас-на-халдон-хилл",
-        //            "шоу",
-        //            "эликсир-жизни",
-        //        }
-        //    },
-        //    { "mouse guard", new List<string>
-        //        {
-        //            "mouse-guard-тег1",
-        //            "mouse-guard-тег2",
-        //        }
-        //    },
-        //};
 
         public MainWindow()
         {
@@ -432,7 +396,8 @@ namespace _1st_attemp
             textBox1.Clear();
         }
 
-        // Событие смены инпута
+        #region Completions
+        
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
             listbox1.Items.Clear();
@@ -452,9 +417,9 @@ namespace _1st_attemp
             return tabletopDataList.SelectMany(tabletopData => tabletopData.Names);
         }
 
-        private List<string> GetTags(string name)
+        private TabletopData GetData(string name)
         {
-            return tabletopDataList.Find(data => data.Names.Contains(name))?.Tags;
+            return tabletopDataList.Find(data => data.Names.Contains(name));
         }
         
         private List<string> GetCompletions(string input)
@@ -463,28 +428,15 @@ namespace _1st_attemp
             input = input.Trim().ToLower();
             var split = input.Split(' ');
             if (!split.Any() || string.IsNullOrEmpty(split[0].Trim())) return new List<string>();
-            
-            // Пытаемся найти среди слов инпута название игры
-            var index = 0;
-            var gameName = split[0];
-            while (!IsTabletopExists(gameName) && index < split.Length-1)
+        
+            // Название игры не дописано, значит пока работаем только с ключами
+            if (!TryGetTabletopName(input, out var gameName))
             {
-                index++;
-                gameName += $" {split[index]}";
-            }
-            
-            if (!IsTabletopExists(gameName))
-            {
-                // Название игры не дописано, значит пока работаем только с ключами
                 return GetAllTabletopNames().Where(key => key.Trim().ToLower().StartsWith(input)).ToList();
             }
 
             // Получаем список слов без тех слов, которые являются частью названия игры
-            var tags = new List<string>();
-            for (int i = index + 1; i < split.Length; i++)
-            {
-                tags.Add(split[i]);
-            }
+            var tags = GetTagsFromInput(input, gameName);
 
             var completions = new List<string>();
             var cursor = "";
@@ -492,7 +444,7 @@ namespace _1st_attemp
             for (int i = tags.Count - 1; i >= 0; i--)
             {
                 cursor = $"{tags[i]} {cursor}".Trim();
-                completions.AddRange(GetTags(gameName).Where(tag =>
+                completions.AddRange(GetData(gameName).Tags.Where(tag =>
                 {
                     var temp = tag.Trim().ToLower();
                     return temp != cursor && temp.StartsWith(cursor);
@@ -500,6 +452,49 @@ namespace _1st_attemp
             }
             
             return completions;
+        }
+
+        /// <summary>
+        /// Вычленяет название настолки из сырого инпута
+        /// </summary>
+        /// <param name="input">Сырой инпут</param>
+        /// <param name="gameName">полученное название настолки, если названия не найдено - будет рано input</param>
+        /// <returns>Истинно, если название настолки найдено</returns>
+        private bool TryGetTabletopName(string input, out string gameName)
+        {
+            var split = input.Trim().ToLower().Split(' ');
+            
+            // Пытаемся найти среди слов инпута название игры
+            var index = 0;
+            gameName = split[0];
+            while (!IsTabletopExists(gameName) && index < split.Length-1)
+            {
+                index++;
+                gameName += $" {split[index]}";
+            }
+            
+            return IsTabletopExists(gameName);
+        }
+
+        private List<string> GetTagsFromInput(string input, string name)
+        {
+            var nameWords = name.Trim().ToLower().Split(' ');
+            var split = input.Trim().ToLower().Split(' ');
+
+            int index = 0;
+            while (index < nameWords.Length && index < split.Length && nameWords[index] == split[index])
+            {
+                index++;
+            }
+            index--;
+
+            var tags = new List<string>();
+            for (int i = index + 1; i < split.Length; i++)
+            {
+                tags.Add(split[i]);
+            }
+
+            return tags;
         }
         
         private void listbox1_selectionchanged(object sender, RoutedEventArgs e)
@@ -525,6 +520,38 @@ namespace _1st_attemp
             textBox1.Text = string.Join(" ", input);
         }
 
+        #endregion
+        
+        private void SearchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // получаем текст из инпута, удаляем название настолки
+            var input = textBox1.Text.Trim().ToLower();
+            if(!TryGetTabletopName(input, out var gameName)) return;
+            
+            var tags = GetTagsFromInput(input, gameName);
+            var tabletopData = GetData(gameName);
+
+            var matchesCount = new Dictionary<PdfFile, int>();
+
+            foreach (var pdf in tabletopData.PdfFiles)
+            {
+                var matches = tags.Count(tag => pdf.RelatedTags.Contains(tag));
+                matchesCount.Add(pdf, matches);
+            }
+            
+            // Выбираем файлы с наибольшим количеством совпадений
+            var max = matchesCount.Values.Max();
+            var bestFiles = matchesCount
+                .Where(pair => pair.Value == max)
+                .Select(pair => pair.Key)
+                .ToList();
+            
+            // Если файлов нет, или их больше одного - ничего не открываем
+            if(bestFiles.Count != 1) return;
+            OpenURL(bestFiles[0].Url);
+        }
+        
+        #region Tabletop Buttons
         private void GurpsBtn_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/1-ecQ7Grm8vQF6HvtJ8soGDVu2WexdHgM/view?usp=sharing") { UseShellExecute = true });
@@ -562,12 +589,14 @@ namespace _1st_attemp
 
         private void ShadowrunBtn_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/1PoCve_Gsx9RGegnyZCTA7Q1nof3jPEMg/view?usp=sharing") { UseShellExecute = true });
+            OpenURL("https://drive.google.com/file/d/1PoCve_Gsx9RGegnyZCTA7Q1nof3jPEMg/view?usp=sharing");
         }
 
-        private void SearchBtn_Click(object sender, RoutedEventArgs e)
+        private static void OpenURL(string url)
         {
-
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
+        
+        #endregion
     }
 }
