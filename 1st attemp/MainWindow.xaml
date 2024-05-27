@@ -43,7 +43,7 @@
                 <Image Source="icons/mouseguard-icon.jpg" Height="45" Width="35"></Image>
             </Button>
             <ListBox SelectionChanged="listbox1_selectionchanged" Visibility="Hidden" Name="listbox1" d:ItemsSource="{d:SampleData ItemCount=10}" Grid.ColumnSpan="3" Margin="186,153,185,147" Grid.RowSpan="2"/>
-            <Button Grid.Column="2" HorizontalAlignment="Left" Margin="238,0,0,0" VerticalAlignment="Center" Height="36" Width="42">
+            <Button Grid.Column="2" HorizontalAlignment="Left" Margin="238,0,0,0" VerticalAlignment="Center" Height="36" Width="42" Click="SearchBtn_Click">
                 <Image Source="icons/search-icon.png" Height="35" Width="37"></Image>
             </Button>
 

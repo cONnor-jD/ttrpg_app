@@ -564,5 +564,10 @@ namespace _1st_attemp
         {
             Process.Start(new ProcessStartInfo("https://drive.google.com/file/d/1PoCve_Gsx9RGegnyZCTA7Q1nof3jPEMg/view?usp=sharing") { UseShellExecute = true });
         }
+
+        private void SearchBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
