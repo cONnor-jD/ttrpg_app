@@ -8,43 +8,46 @@
         Title="MainWindow" Height="541" Width="839">
     <Viewbox Stretch="Uniform">
         <Grid VerticalAlignment="Top" Margin="0,10,0,0" Height="514">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="16*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="139*"/>
-            <ColumnDefinition Width="33*"/>
-            <ColumnDefinition Width="167*"/>
-        </Grid.ColumnDefinitions>
-        <TextBox Name="textBox1" VerticalAlignment="Center" Margin="186,0,185,0" FontSize="18" FontFamily="Roboto" TextWrapping="Wrap" Text="" Height="35" Grid.ColumnSpan="3" TextChanged="textBox1_TextChanged"/>
-        <Button VerticalAlignment="Top" Margin="21,167,22,0" Height="39" Width="39" Click="GurpsBtn_Click" Grid.Column="1">
-            <Image Source="icons/gurps-icon.jpg" Height="45" Width="35"></Image>
-        </Button>
-        <Button VerticalAlignment="Top" Margin="305,167,0,0" Height="39" Width="39" Click="CyberpunkredBtn_Click">
-            <Image Source="icons/cyberpunk-red.jpg" Height="45" Width="35"></Image>
-        </Button>
-        <Button VerticalAlignment="Top" Margin="0,167,374,0" Height="39" Width="39" Grid.Column="2" Click="CallofCthulhuBtn_Click">
-            <Image Source="icons/cthulhu-icon.png" Height="45" Width="35"></Image>
-        </Button>
-        <Button VerticalAlignment="Top" Margin="126,167,248,0" Height="39" Width="39" Grid.Column="2" Click="VtmBtn_Click">
-            <Image Source="icons/vtm.jpg" Height="45" Width="35"></Image>
-        </Button>
-        <Button VerticalAlignment="Top" Margin="189,167,185,0" Height="39" Width="39" Grid.Column="2" Click="ShadowrunBtn_Click">
-            <Image Source="icons/shadowrun-icon.jpg" Height="45" Width="35"></Image>
-        </Button>
-        <Button Margin="245,167,60,0" VerticalAlignment="Top" Height="39" Width="39" Click="PathfinderBtn_Click">
-            <Image Source="icons/pathfinder-icon.jpg" Height="45" Width="35"></Image>
-        </Button>
-        <Button VerticalAlignment="Top" Height="39" Width="39" Margin="62,167,312,0" Grid.Column="2" Click="DndBtn_Click">
-            <Image Source="icons/dnd-icon.jpg" Height="45" Width="35"></Image>
-        </Button>
-        <Button VerticalAlignment="Top" Margin="186,167,120,0" Height="39" Width="39" Click="MouseguardBtn_Click">
-            <Image Source="icons/mouseguard-icon.jpg" Height="45" Width="35"></Image>
-        </Button>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="17*"/>
+                <RowDefinition Height="16*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="139*"/>
+                <ColumnDefinition Width="33*"/>
+                <ColumnDefinition Width="167*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="textBox1" VerticalAlignment="Center" Margin="186,0,185,0" FontSize="18" FontFamily="Roboto" TextWrapping="Wrap" Text="" Height="35" Grid.ColumnSpan="3" TextChanged="textBox1_TextChanged"/>
+            <Button VerticalAlignment="Top" Margin="21,167,22,0" Height="39" Width="39" Click="GurpsBtn_Click" Grid.Column="1">
+                <Image Source="icons/gurps-icon.jpg" Height="45" Width="35"></Image>
+            </Button>
+            <Button VerticalAlignment="Top" Margin="305,167,0,0" Height="39" Width="39" Click="CyberpunkredBtn_Click">
+                <Image Source="icons/cyberpunk-red.jpg" Height="45" Width="35"></Image>
+            </Button>
+            <Button VerticalAlignment="Top" Margin="0,167,374,0" Height="39" Width="39" Grid.Column="2" Click="CallofCthulhuBtn_Click">
+                <Image Source="icons/cthulhu-icon.png" Height="45" Width="35"></Image>
+            </Button>
+            <Button VerticalAlignment="Top" Margin="126,167,248,0" Height="39" Width="39" Grid.Column="2" Click="VtmBtn_Click">
+                <Image Source="icons/vtm.jpg" Height="45" Width="35"></Image>
+            </Button>
+            <Button VerticalAlignment="Top" Margin="189,167,185,0" Height="39" Width="39" Grid.Column="2" Click="ShadowrunBtn_Click">
+                <Image Source="icons/shadowrun-icon.jpg" Height="45" Width="35"></Image>
+            </Button>
+            <Button Margin="245,167,60,0" VerticalAlignment="Top" Height="39" Width="39" Click="PathfinderBtn_Click">
+                <Image Source="icons/pathfinder-icon.jpg" Height="45" Width="35"></Image>
+            </Button>
+            <Button VerticalAlignment="Top" Height="39" Width="39" Margin="62,167,312,0" Grid.Column="2" Click="DndBtn_Click">
+                <Image Source="icons/dnd-icon.jpg" Height="45" Width="35"></Image>
+            </Button>
+            <Button VerticalAlignment="Top" Margin="186,167,120,0" Height="39" Width="39" Click="MouseguardBtn_Click">
+                <Image Source="icons/mouseguard-icon.jpg" Height="45" Width="35"></Image>
+            </Button>
             <ListBox SelectionChanged="listbox1_selectionchanged" Visibility="Hidden" Name="listbox1" d:ItemsSource="{d:SampleData ItemCount=10}" Grid.ColumnSpan="3" Margin="186,153,185,147" Grid.RowSpan="2"/>
+            <Button Grid.Column="2" HorizontalAlignment="Left" Margin="238,0,0,0" VerticalAlignment="Center" Height="36" Width="42">
+                <Image Source="icons/search-icon.png" Height="35" Width="37"></Image>
+            </Button>
 
-    </Grid>
+        </Grid>
     </Viewbox>
 
 </Window>
